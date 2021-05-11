@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../pages/map.dart';
-
+/*
 Widget _buildMenuItem(
     BuildContext context, Widget title, String routeName, String currentRoute) {
   var isSelected = routeName == currentRoute;
@@ -37,4 +37,4 @@ Drawer buildDrawer(BuildContext context, String currentRoute) {
       ],
     ),
   );
-}
+}*/
