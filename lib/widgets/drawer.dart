@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../pages/map.dart';
-/*
-Widget _buildMenuItem(
+
+/*Widget _buildMenuItem(
     BuildContext context, Widget title, String routeName, String currentRoute) {
   var isSelected = routeName == currentRoute;
 
