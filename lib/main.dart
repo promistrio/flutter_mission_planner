@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'pages/map.dart';
+import 'pages/map_page.dart';
 import 'bloc/mission_manager.dart';
-
 
 /// This is a reimplementation of the default Flutter application using provider + [ChangeNotifier].
 void main() {

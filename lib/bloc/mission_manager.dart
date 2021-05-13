@@ -41,4 +41,19 @@ class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
     _wpModel.swap(oldIndex, newIndex);
     notifyListeners();
   }
+
+  void delete(int index) {
+    _wpModel.delete(index);
+    notifyListeners();
+  }
+
+  void edit(int index, WayPoint point) {
+    _wpModel.edit(index, point);
+    notifyListeners();
+  }
+
+  void move(LatLng pos) {
+    mapController.move(pos, mapController.zoom);
+    notifyListeners();
+  }
 }

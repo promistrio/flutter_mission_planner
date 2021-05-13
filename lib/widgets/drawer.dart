@@ -14,13 +14,32 @@ class MissionDrawer extends StatelessWidget {
             children: //listMarkers
                 List.generate(
                     missionList.length,
-                    (index) => ListTile(
-                          key: Key('$index'),
-                          tileColor: missionManager.activeWaypoint == index
-                              ? Colors.green
-                              : Colors.blue,
-                          title: Text('$index: ' +
-                              getWayPointType(missionList[index].type)),
+                    (index) => Dismissible(
+                          key: UniqueKey(),
+                          child: ListTile(
+                            onTap: () {
+                              missionManager.activeWaypoint = index;
+                              missionManager.move(missionList[index].pos);
+                            },
+                            tileColor: missionManager.activeWaypoint == index
+                                ? Colors.green
+                                : Colors.blue,
+                            title: Text('$index: ' +
+                                getWayPointType(missionList[index].type)),
+                          ),
+                          background: Container(
+                            child: Center(
+                              child: Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            color: Colors.red,
+                          ),
+                          onDismissed: (DismissDirection direction) {
+                            missionManager.delete(index);
+                          },
+                          direction: DismissDirection.startToEnd,
                         )),
             /*<Widget>[
           for (int index = 0; index < listMarkers.length; index++)

@@ -79,7 +79,7 @@ class MapWidget extends StatelessWidget {
                                   decoration: new BoxDecoration(
                                     color: (index == activeWaypoint)
                                         ? Colors.green
-                                        : Colors.blue,
+                                        : getWPColor(markerList[index].type),
                                     shape: BoxShape.circle,
                                     border: Border.all(color: Colors.white),
                                   )),
@@ -95,5 +95,14 @@ class MapWidget extends StatelessWidget {
             )),
       ),
     ]);
+  }
+
+  Color getWPColor(WayPointType type) {
+    switch (type) {
+      case WayPointType.waypoint:
+        return Colors.blue;
+      case WayPointType.spiral:
+        return Colors.orange;
+    }
   }
 }

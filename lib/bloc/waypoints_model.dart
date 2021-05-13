@@ -8,10 +8,35 @@ enum WayPointType {
   homepoint,
 }
 
+List<String> getWayPointTypeList() {
+  return ["Waypoint", "Spiral"];
+}
+
+int typeToIndex(WayPointType type) {
+  switch (type) {
+    case WayPointType.waypoint:
+      return 0;
+    case WayPointType.spiral:
+      return 1;
+    default:
+      print("undefined wp type");
+  }
+}
+
+WayPointType indexToType(index) {
+  switch (index) {
+    case 0:
+      return WayPointType.waypoint;
+    case 1:
+      return WayPointType.spiral;
+  }
+}
+
 class WayPoint {
   WayPointType type;
   int height;
   int loops;
+  double radius;
   LatLng pos;
 
   WayPoint(this.type, this.pos);
@@ -29,15 +54,19 @@ class WayPointsModel {
 
   void delete(int delIndex) {
     RangeError.checkValidIndex(delIndex, _points);
-    _points.asMap().forEach((key, value) {
-      print(key);
-    });
-    //delete code
+    _points.removeAt(delIndex);
+    updateModel();
     //update numbers code
   }
 
   void swap(int index1, int index2) {
     _points.swap(index1, index2);
+    updateModel();
+  }
+
+  void edit(int index, WayPoint point) {
+    RangeError.checkValidIndex(index, _points);
+    _points[index] = point;
     updateModel();
   }
 
@@ -51,7 +80,7 @@ class WayPointsModel {
     return _listItems;
   }
 
-  List<LatLng> getLanLng() {}
+  List getCircles() {}
 
   void updateModel() {
     _markers.clear();
