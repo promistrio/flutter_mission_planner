@@ -1,3 +1,4 @@
+import 'package:airspector_mission_planner/bloc/waypoints_model.dart';
 import 'package:airspector_mission_planner/widgets/point_editor.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,8 @@ class MyHomePage extends StatelessWidget {
           /// This is ignored if animatedIcon is non null
           icon: Icons.add,
           activeIcon: Icons.remove,
-          // iconTheme: IconThemeData(color: Colors.grey[50], size: 30),
+          //iconTheme: IconThemeData(color: Colors.grey[50], size: 30),
+
           /// The label of the main button.
           // label: Text("Open Speed Dial"),
           /// The active label of the main button, Defaults to label if not specified.
@@ -46,7 +48,7 @@ class MyHomePage extends StatelessWidget {
           overlayOpacity: 0.5,
           onOpen: () => print('OPENING DIAL'),
           onClose: () => print('DIAL CLOSED'),
-          onPress: () => missionManager.addWaypoint(),
+          onPress: () => missionManager.addWaypoint(WayPointType.waypoint),
           heroTag: 'speed-dial-hero-tag',
 
           elevation: 8.0,
@@ -58,9 +60,9 @@ class MyHomePage extends StatelessWidget {
             SpeedDialChild(
               child: Icon(Icons.accessibility),
               backgroundColor: Colors.red,
-              label: 'Move active point',
+              label: 'Move active point here',
               labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () => print('FIRST CHILD'),
+              onTap: () => missionManager.movePointToCenter(),
               //onLongPress: () => print('FIRST CHILD LONG PRESS'),
             ),
             SpeedDialChild(
@@ -76,7 +78,7 @@ class MyHomePage extends StatelessWidget {
               backgroundColor: Colors.blue,
               label: 'Add waypoint',
               labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () => print('SECOND CHILD'),
+              onTap: () => missionManager.addWaypoint(WayPointType.waypoint),
               //onLongPress: () => print('SECOND CHILD LONG PRESS'),
             ),
             SpeedDialChild(
@@ -84,16 +86,11 @@ class MyHomePage extends StatelessWidget {
               backgroundColor: Colors.green,
               label: 'Add Spiral',
               labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () => print('THIRD CHILD'),
+              onTap: () => missionManager.addWaypoint(WayPointType.spiral),
               //onLongPress: () => print('THIRD CHILD LONG PRESS'),
             ),
           ],
         ),
-        /* FloatingActionButton(
-          key: const Key('increment_floatingActionButton'),
-          onPressed: () => missionManager.addWaypoint(),
-          child: const Icon(Icons.add),
-        ),*/
         drawer: Opacity(opacity: 0.7, child: MissionDrawer()));
   }
 
@@ -105,7 +102,7 @@ class MyHomePage extends StatelessWidget {
       transitionDuration: Duration(milliseconds: 700),
       context: context,
       pageBuilder: (_, __, ___) {
-        return PointEditor();
+        return Material(type: MaterialType.transparency, child: PointEditor());
       },
       transitionBuilder: (_, anim, __, child) {
         return SlideTransition(

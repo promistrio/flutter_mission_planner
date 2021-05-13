@@ -15,9 +15,8 @@ class PointEditor extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: 300,
-        child: SizedBox.expand(
-            child: Container(
-                child: Column(
+        child: Container(
+            child: Column(
           children: [
             ToggleSwitch(
               minWidth: 140,
@@ -30,28 +29,46 @@ class PointEditor extends StatelessWidget {
             ),
             Row(
               children: [
-                NumberPicker(
-                  value: 3,
-                  minValue: 0,
-                  maxValue: 100,
-                  //onChanged: (value) => setState(() => _currentValue = value),
-                ),
-                NumberPicker(
-                  value: 3,
-                  minValue: 0,
-                  maxValue: 100,
-                  //onChanged: (value) => setState(() => _currentValue = value),
-                ),
-                NumberPicker(
-                  value: 3,
-                  minValue: 0,
-                  maxValue: 100,
-                  //onChanged: (value) => setState(() => _currentValue = value),
-                ),
+                Column(children: [
+                  Text("Height"),
+                  NumberPicker(
+                    value: point.height,
+                    minValue: 1,
+                    maxValue: 100,
+                    onChanged: (value) {
+                      point.height = value;
+                      missionManager.edit(missionManager.activeWaypoint, point);
+                    },
+                  )
+                ]),
+                Column(children: [
+                  Text("Radius"),
+                  NumberPicker(
+                    value: point.radius,
+                    minValue: 3,
+                    maxValue: 100,
+                    onChanged: (value) {
+                      point.radius = value;
+                      missionManager.edit(missionManager.activeWaypoint, point);
+                    },
+                  )
+                ]),
+                Column(children: [
+                  Text("Loops"),
+                  NumberPicker(
+                    value: point.loops,
+                    minValue: 1,
+                    maxValue: 100,
+                    onChanged: (value) {
+                      point.loops = value;
+                      missionManager.edit(missionManager.activeWaypoint, point);
+                    },
+                  )
+                ])
               ],
             )
           ],
-        ))),
+        )),
         margin: EdgeInsets.only(bottom: 50, left: 12, right: 12, top: 15),
         decoration: BoxDecoration(
           color: Colors.white,

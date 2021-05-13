@@ -28,7 +28,7 @@ class MapWidget extends StatelessWidget {
             //onTap: (point) {mapController.move(paris, 5.0);},
             center: LatLng(46.213951, 39.939196),
             zoom: 13.0,
-            maxZoom: 19.0,
+            maxZoom: 21.0,
             minZoom: 5.0,
             interactiveFlags: InteractiveFlag.pinchZoom |
                 InteractiveFlag.drag |
@@ -49,15 +49,27 @@ class MapWidget extends StatelessWidget {
             ]),
 
             // Circle markers which show radius of spirals and fence points
-            CircleLayerOptions(circles: [
-              CircleMarker(
-                  //radius marker
-                  point: LatLng(46.213951, 39.939196),
-                  color: Colors.blue.withOpacity(0.3),
-                  borderStrokeWidth: 3.0,
-                  borderColor: Colors.blue,
-                  radius: 100, //radius
-                  useRadiusInMeter: true)
+            CircleLayerOptions(circles: <CircleMarker>[
+              for (int index = 0; index < markerList.length; index++)
+                if (markerList[index].type == WayPointType.spiral)
+                  new CircleMarker(
+                      //radius marker
+                      point: markerList[index].pos,
+                      color: Colors.blue.withOpacity(0.3),
+                      borderStrokeWidth: 3.0,
+                      borderColor: Colors.blue,
+                      radius: markerList[index].radius.toDouble(), //radius
+                      useRadiusInMeter: true),
+              for (int index = 0; index < markerList.length; index++)
+                if (markerList[index].type == WayPointType.spiral)
+                  new CircleMarker(
+                      //radius marker
+                      point: markerList[index].pos,
+                      color: Colors.red.withOpacity(0.3),
+                      borderStrokeWidth: 3.0,
+                      borderColor: Colors.red,
+                      radius: 3, //markerList[index].radius, //radius
+                      useRadiusInMeter: true),
             ]),
 
             // General markers of all waypoints

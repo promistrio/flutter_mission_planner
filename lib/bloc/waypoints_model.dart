@@ -36,7 +36,7 @@ class WayPoint {
   WayPointType type;
   int height;
   int loops;
-  double radius;
+  int radius;
   LatLng pos;
 
   WayPoint(this.type, this.pos);
@@ -49,6 +49,9 @@ class WayPointsModel {
 
   void add(WayPointType type, LatLng pos) {
     _points.add(new WayPoint(type, pos));
+    _points.last.height = 10;
+    _points.last.loops = 5;
+    _points.last.radius = 5;
     updateModel();
   }
 
@@ -70,7 +73,10 @@ class WayPointsModel {
     updateModel();
   }
 
-  void move(int index) {}
+  void move(int index, LatLng pos) {
+    RangeError.checkValidIndex(index, _points);
+    _points[index].pos = pos;
+  }
 
   List<WayPoint> points() {
     return _points;

@@ -19,7 +19,7 @@ class MissionDrawer extends StatelessWidget {
                           child: ListTile(
                             onTap: () {
                               missionManager.activeWaypoint = index;
-                              missionManager.move(missionList[index].pos);
+                              missionManager.moveMap(missionList[index].pos);
                             },
                             tileColor: missionManager.activeWaypoint == index
                                 ? Colors.green

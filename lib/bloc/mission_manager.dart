@@ -28,11 +28,12 @@ class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
           new LatLng(currentMarker.pos.latitude, currentMarker.pos.longitude))
       .toList();
 
-  void addWaypoint() {
+  void addWaypoint(WayPointType type) {
     mapController.onReady.then((result) {
-      _wpModel.add(WayPointType.waypoint, mapController.center);
+      _wpModel.add(type, mapController.center);
       _missionMarkers = _wpModel.points();
       _missionList = _wpModel.listItems();
+      _activeWaypoint = missionMarkers.length - 1;
       notifyListeners();
     });
   }
@@ -52,8 +53,16 @@ class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
     notifyListeners();
   }
 
-  void move(LatLng pos) {
+  void moveMap(LatLng pos) {
     mapController.move(pos, mapController.zoom);
+    notifyListeners();
+  }
+
+  void movePointToCenter() {
+    if (_missionMarkers.asMap().containsKey(_activeWaypoint)) {
+      _wpModel.move(_activeWaypoint, mapController.center);
+    }
+
     notifyListeners();
   }
 }
