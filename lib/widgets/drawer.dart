@@ -1,6 +1,45 @@
+import 'package:airspector_mission_planner/bloc/waypoints_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_map/flutter_map.dart';
+import '../bloc/mission_manager.dart';
 
-import '../pages/map.dart';
+class MissionDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    MissionManager missionManager = Provider.of<MissionManager>(context);
+    List<WayPoint> missionList = missionManager.missionMarkers;
+    return Drawer(
+        child: ReorderableListView(
+            children: //listMarkers
+                List.generate(
+                    missionList.length,
+                    (index) => ListTile(
+                          key: Key('$index'),
+                          tileColor: missionManager.activeWaypoint == index
+                              ? Colors.green
+                              : Colors.blue,
+                          title: Text('$index: ' +
+                              getWayPointType(missionList[index].type)),
+                        )),
+            /*<Widget>[
+          for (int index = 0; index < listMarkers.length; index++)
+            
+        ],*/
+            onReorder: (int oldIndex, int newIndex) {
+              print("$oldIndex $newIndex");
+              missionManager.swap(oldIndex, newIndex);
+              if (missionManager.activeWaypoint == oldIndex)
+                missionManager.activeWaypoint = newIndex;
+            }));
+  }
+
+  String getWayPointType(WayPointType tp) {
+    if (tp == WayPointType.waypoint)
+      return "Waypoint";
+    else if (tp == WayPointType.spiral) return "Spiral";
+  }
+}
 
 /*Widget _buildMenuItem(
     BuildContext context, Widget title, String routeName, String currentRoute) {
