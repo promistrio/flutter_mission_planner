@@ -3,8 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:convert';
 
 class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
+  final Socket channel;
+  MissionManager(this.channel) {
+    channel.listen((List<int> event) {
+      print("received data: " + utf8.decode(event));
+    });
+  }
+
   MapController mapController = new MapController();
 
   WayPointsModel _wpModel = new WayPointsModel();
@@ -34,6 +43,7 @@ class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
       _missionMarkers = _wpModel.points();
       _missionList = _wpModel.listItems();
       _activeWaypoint = missionMarkers.length - 1;
+      sendMission();
       notifyListeners();
     });
   }
@@ -64,5 +74,9 @@ class MissionManager with ChangeNotifier, DiagnosticableTreeMixin {
     }
 
     notifyListeners();
+  }
+
+  void sendMission() {
+    channel.add(utf8.encode(jsonEncode({"data": _missionMarkers})));
   }
 }

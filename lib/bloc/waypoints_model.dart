@@ -1,6 +1,9 @@
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:convert';
+import 'dart:async';
 
 enum WayPointType {
   waypoint,
@@ -40,6 +43,17 @@ class WayPoint {
   LatLng pos;
 
   WayPoint(this.type, this.pos);
+
+  Map toJson() => {
+        'lat': pos.latitude,
+        'lon': pos.longitude,
+        'alt': height,
+        'loops': loops,
+        'radius': radius,
+        'type': type == WayPointType.spiral
+            ? 18 //18 - spiral spiral
+            : 16 //16 waypoint in ardupilot
+      };
 }
 
 class WayPointsModel {

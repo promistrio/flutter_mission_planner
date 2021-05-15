@@ -37,15 +37,28 @@ class MapWidget extends StatelessWidget {
           ),
           layers: [
             TileLayerOptions(
+                //backgroundColor: Colors.transparent,
+                urlTemplate:
+                    "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+                maxZoom: 21,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']),
+            TileLayerOptions(
+                backgroundColor: Colors.transparent,
+                urlTemplate:
+                    "http://{s}.google.com/vt/lyrs=h&x={x}&y={y}&z={z}",
+                maxZoom: 21,
+                subdomains: ['mt0', 'mt1', 'mt2', 'mt3']),
+            /*TileLayerOptions(
                 urlTemplate:
                     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                subdomains: ['a', 'b', 'c']),
+                subdomains: ['a', 'b', 'c']),*/
             PolylineLayerOptions(polylines: [
               Polyline(
-                points: context.watch<MissionManager>().missionLines,
-                color: Colors.black,
-                //points:<LatLng>[LatLng(46.213951, 39.939196), LatLng(46.113951, 39.639196)]
-              )
+                  points: context.watch<MissionManager>().missionLines,
+                  color: Colors.orange,
+                  strokeWidth: 3
+                  //points:<LatLng>[LatLng(46.213951, 39.939196), LatLng(46.113951, 39.639196)]
+                  )
             ]),
 
             // Circle markers which show radius of spirals and fence points
@@ -118,3 +131,37 @@ class MapWidget extends StatelessWidget {
     }
   }
 }
+
+/*
+
+MapLayer(
+        ListTile(
+          title: Text("Google гибрид"),
+          key: GlobalKey(),
+        ),
+        TileLayerOptions(
+            backgroundColor: Colors.transparent,
+            urlTemplate: "http://{s}.google.com/vt/lyrs=h&x={x}&y={y}&z={z}",
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'])),
+    MapLayer(
+        ListTile(
+          title: Text("Google спутник"),
+          key: GlobalKey(),
+        ),
+        TileLayerOptions(
+            backgroundColor: Colors.transparent,
+            urlTemplate: "http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'])),
+    MapLayer(
+      ListTile(
+        title: Text("OpenStreetMap"),
+        key: GlobalKey(),
+      ),
+      TileLayerOptions(
+          backgroundColor: Colors.transparent,
+          urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          subdomains: ['a', 'b', 'c']),
+    ),
+*/
