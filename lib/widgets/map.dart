@@ -29,7 +29,7 @@ class MapWidget extends StatelessWidget {
             center: LatLng(46.213951, 39.939196),
             zoom: 13.0,
             maxZoom: 21.0,
-            minZoom: 5.0,
+            minZoom: 2.0,
             interactiveFlags: InteractiveFlag.pinchZoom |
                 InteractiveFlag.drag |
                 InteractiveFlag.doubleTapZoom |
@@ -87,28 +87,46 @@ class MapWidget extends StatelessWidget {
 
             // General markers of all waypoints
             MarkerLayerOptions(
-                markers: List.generate(
-                    missionList.length,
-                    (index) => Marker(
-                        width: 30.0,
-                        height: 30.0,
-                        point: markerList[index].pos,
-                        builder: (ctx) => GestureDetector(
-                              onTap: () {
-                                missionManager.activeWaypoint = index;
-                              },
-                              child: Container(
-                                  width: 30.0,
-                                  height: 30.0,
-                                  child: Center(child: Text(index.toString())),
-                                  decoration: new BoxDecoration(
-                                    color: (index == activeWaypoint)
-                                        ? Colors.green
-                                        : getWPColor(markerList[index].type),
-                                    shape: BoxShape.circle,
-                                    border: Border.all(color: Colors.white),
-                                  )),
-                            )))),
+              markers: List.generate(
+                  missionList.length,
+                  (index) => Marker(
+                      width: 30.0,
+                      height: 30.0,
+                      point: markerList[index].pos,
+                      builder: (ctx) => GestureDetector(
+                            onTap: () {
+                              missionManager.activeWaypoint = index;
+                            },
+                            child: Container(
+                                width: 30.0,
+                                height: 30.0,
+                                child: Center(child: Text(index.toString())),
+                                decoration: new BoxDecoration(
+                                  color: (index == activeWaypoint)
+                                      ? Colors.green
+                                      : getWPColor(markerList[index].type),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.white),
+                                )),
+                          ))),
+            ),
+            MarkerLayerOptions(markers: [
+              Marker(
+                  width: 30.0,
+                  height: 30.0,
+                  point: missionManager.uavMarker,
+                  builder: (ctx) => GestureDetector(
+                        child: Container(
+                            width: 30.0,
+                            height: 30.0,
+                            child: Center(child: Text("X")),
+                            decoration: new BoxDecoration(
+                              color: Colors.yellow,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white),
+                            )),
+                      ))
+            ])
           ]),
       Center(
         child: Opacity(

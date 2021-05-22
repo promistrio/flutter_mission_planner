@@ -28,6 +28,8 @@ dependencies:
   toggle_switch: "^0.1.9"
   numberpicker: ^2.1.1
   flutter_bloc: ^7.0.0
+  protobuf: ^2.0.0
+  grpc: ^3.0.0
   flutter:
     sdk: flutter
 

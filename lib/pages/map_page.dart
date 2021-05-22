@@ -48,7 +48,7 @@ class MyHomePage extends StatelessWidget {
           overlayOpacity: 0.5,
           onOpen: () => print('OPENING DIAL'),
           onClose: () => print('DIAL CLOSED'),
-          onPress: () => missionManager.addWaypoint(WayPointType.waypoint),
+          // onPress: () => missionManager.addWaypoint(WayPointType.waypoint),
           heroTag: 'speed-dial-hero-tag',
 
           elevation: 8.0,
@@ -63,6 +63,14 @@ class MyHomePage extends StatelessWidget {
               label: 'Move active point here',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: () => missionManager.movePointToCenter(),
+              //onLongPress: () => print('FIRST CHILD LONG PRESS'),
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.accessibility),
+              backgroundColor: Colors.red,
+              label: 'Move active to  UAV center',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => missionManager.movePointToUAV(),
               //onLongPress: () => print('FIRST CHILD LONG PRESS'),
             ),
             SpeedDialChild(
@@ -87,6 +95,14 @@ class MyHomePage extends StatelessWidget {
               label: 'Add Spiral',
               labelStyle: TextStyle(fontSize: 18.0),
               onTap: () => missionManager.addWaypoint(WayPointType.spiral),
+              //onLongPress: () => print('THIRD CHILD LONG PRESS'),
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.keyboard_voice),
+              backgroundColor: Colors.green,
+              label: 'Upload to vehicle',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => missionManager.uploadMission(),
               //onLongPress: () => print('THIRD CHILD LONG PRESS'),
             ),
           ],
